@@ -80,6 +80,15 @@
         angular.extend(scopeOptions, scope.settings || {});
         htOptions = this.getAvailableSettings();
 
+        if (scopeOptions.customSettings !== undefined && scopeOptions.customSettings.constructor == Array && scopeOptions.customSettings.length > 0) {
+          for (i = 0, length = scopeOptions.customSettings.length; i < length; i++) {
+            var customSetting = scopeOptions.customSettings[i];
+            if (htOptions.indexOf(customSetting) === -1) {
+              htOptions.push(customSetting);
+            }
+          }
+        }
+
         for (i = 0, length = htOptions.length; i < length; i++) {
           if (typeof scopeOptions[htOptions[i]] !== 'undefined') {
             settings[htOptions[i]] = scopeOptions[htOptions[i]];

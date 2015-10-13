@@ -5,7 +5,7 @@
  * Copyright 2015 Handsoncode sp. z o.o. <hello@handsontable.com>
  * Licensed under the MIT license.
  * https://github.com/handsontable/ngHandsontable
- * Date: Mon Oct 05 2015 21:07:04 GMT+0200 (CEST)
+ * Date: Tue Oct 13 2015 14:32:54 GMT+0700 (ICT)
 */
 
 if (document.all && !document.addEventListener) { // IE 8 and lower
@@ -180,6 +180,15 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
         settings = settings || {};
         angular.extend(scopeOptions, scope.settings || {});
         htOptions = this.getAvailableSettings();
+
+        if (scopeOptions.customSettings !== undefined && scopeOptions.customSettings.constructor == Array && scopeOptions.customSettings.length > 0) {
+          for (i = 0, length = scopeOptions.customSettings.length; i < length; i++) {
+            var customSetting = scopeOptions.customSettings[i];
+            if (htOptions.indexOf(customSetting) === -1) {
+              htOptions.push(customSetting);
+            }
+          }
+        }
 
         for (i = 0, length = htOptions.length; i < length; i++) {
           if (typeof scopeOptions[htOptions[i]] !== 'undefined') {
